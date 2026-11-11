@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Embled Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#15171c;--pn:#1d2027;--ln:#2d313b;--tx:#e8eaf0;--mu:#8d93a3;--ac:#8ab4ff;--dc:#313338;--dce:#2b2d31;color-scheme:dark}
+@media(prefers-color-scheme:light){:root{--bg:#eef0f4;--pn:#fff;--ln:#d5d9e2;--tx:#1b1e26;--mu:#5d6475;--ac:#2f5fd0;color-scheme:light}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 "Bricolage Grotesque",system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--ln);position:sticky;top:0;background:var(--bg);z-index:5}
+h1{font-size:22px;font-weight:800;margin:0;letter-spacing:-.02em}
+.bar{display:flex;gap:8px;flex-wrap:wrap}
+button,.btn{font:inherit;font-weight:600;border:1px solid var(--ln);background:var(--pn);color:var(--tx);padding:7px 13px;border-radius:7px;cursor:pointer}
+button:hover,.btn:hover{border-color:var(--ac)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+.pri{background:var(--ac);color:#0c1220;border-color:var(--ac)}
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;padding:22px;max-width:1400px;margin:auto}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+section{background:var(--pn);border:1px solid var(--ln);border-radius:10px;padding:16px;margin-bottom:16px}
+h2{font-size:15px;margin:0 0 12px;font-weight:800}
+label{display:block;margin-bottom:10px;color:var(--mu);font-size:12.5px}
+input,textarea{width:100%;margin-top:4px;background:var(--bg);color:var(--tx);border:1px solid var(--ln);border-radius:6px;padding:8px 10px;font:inherit}
+textarea{min-height:90px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button.on{background:var(--ac);color:#0c1220;border-color:var(--ac)}
+.row{display:grid;grid-template-columns:1fr 1.4fr auto;gap:8px;align-items:end;margin-bottom:8px}
+.row label{margin:0}.chk{display:flex;gap:6px;align-items:center;margin:0 0 10px}.chk input{width:auto;margin:0}
+.x{padding:7px 10px}
+.hint{color:var(--mu);font-size:12px;margin:0 0 12px}
+.pv{position:sticky;top:76px;align-self:start}
+.dc{background:var(--dc);color:#dbdee1;border-radius:10px;padding:16px;font-family:"gg sans",system-ui,sans-serif;font-size:15px;line-height:1.4}
+.msg{display:flex;gap:14px}
+.av{width:40px;height:40px;border-radius:50%;background:#5865f2;flex:none;object-fit:cover;display:grid;place-items:center;color:#fff;font-weight:700}
+.nm{font-weight:600;color:#f2f3f5}.tag{background:#5865f2;color:#fff;font-size:10px;border-radius:3px;padding:1px 4px;margin-left:6px;vertical-align:1px}
+.mc{min-width:0;flex:1}.mc a{color:#00a8fc}.mc code{background:#1e1f22;padding:0 4px;border-radius:3px}
+.em{margin-top:6px;max-width:520px;background:var(--dce);border-left:4px solid #5865f2;border-radius:4px;padding:8px 14px 12px 12px}
+.eb{display:flex;gap:12px}.emm{min-width:0;flex:1}
+.ea{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600;margin-top:4px;color:#f2f3f5}.ea img,.ef img{width:24px;height:24px;border-radius:50%}
+.et{font-weight:700;font-size:16px;margin-top:8px;color:#f2f3f5}.ed{font-size:14px;margin-top:8px;overflow-wrap:anywhere}
+.fs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.f{flex:1 1 100%;font-size:14px;min-width:0}.f.i{flex:1 1 30%}.fn{font-weight:700;color:#f2f3f5}
+.th{width:80px;height:80px;border-radius:4px;object-fit:cover;margin-top:8px}
+.im{max-width:100%;border-radius:4px;margin-top:12px;display:block}
+.ef{display:flex;gap:8px;align-items:center;font-size:12px;margin-top:10px;color:#b5bac1}.ef img{width:20px;height:20px}
+.bt{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.bt a{background:#4e5058;color:#fff;padding:6px 14px;border-radius:4px;font-size:14px;text-decoration:none}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ac);color:#0c1220;padding:8px 16px;border-radius:8px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+</style></head><body>
+<header><h1>Embled Studio</h1>
+<div class="bar"><label class="btn" style="margin:0">Открыть .json<input id="imp" type="file" accept=".json,application/json" hidden></label>
+<button id="rst">Сбросить</button><button id="cp">Копировать JSON</button><button id="dl" class="pri">Скачать embled.json</button></div></header>
+<main><div id="form"></div>
+<div class="pv"><div class="dc" id="pv" aria-live="polite"></div>
+<p class="hint" style="margin-top:10px">Скачайте файл и отправьте его боту командой <b>/embled_import</b>. Иконки и картинки — только прямые ссылки (https://…).</p></div></main>
+<div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const url=u=>/^https?:\/\//i.test(u||'')?esc(u):'';
+const md=t=>esc(t).replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>').replace(/~~(.+?)~~/g,'<s>$1</s>').replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>').replace(/\n/g,'<br>');
+const newEmbed=()=>({color:'#5865f2',author_name:'',author_url:'',author_icon:'',title:'',url:'',description:'',thumbnail:'',image:'',footer_text:'',footer_icon:'',timestamp:false,fields:[]});
+const blank=()=>({username:'',avatar_url:'',content:'',embeds:[newEmbed()],buttons:[]});
+let S=blank(),cur=0;
+const get=p=>p.split('.').reduce((o,k)=>o?.[k],S);
+const set=(p,v)=>{const k=p.split('.'),l=k.pop();k.reduce((o,x)=>o[x],S)[l]=v};
+const I=(l,p,max,ph='')=>`<label>${l}<input data-p="${p}" value="${esc(get(p))}" maxlength="${max||500}" placeholder="${ph}"></label>`;
+const T=(l,p,max)=>`<label>${l}<textarea data-p="${p}" maxlength="${max}">${esc(get(p))}</textarea></label>`;
+function form(){
+  const e=`embeds.${cur}.`,E=S.embeds[cur];
+  $('#form').innerHTML=`
+  <section><h2>Отправитель</h2><div class="g2">${I('Ник бота','username',80,'Embled')}${I('Иконка бота (URL)','avatar_url',500,'https://…')}</div>
+  <p class="hint">Ник и иконка применяются через вебхук. В нике нельзя использовать слова «discord» и «clyde».</p></section>
+  <section><h2>Текст над эмбедом</h2>${T('Сообщение','content',2000)}</section>
+  <section><h2>Эмбеды</h2><div class="tabs">${S.embeds.map((_,i)=>`<button data-tab="${i}" class="${i==cur?'on':''}">Эмбед ${i+1}</button>`).join('')}${S.embeds.length<10?'<button id="addE">+ Добавить</button>':''}${S.embeds.length>1?'<button id="delE">Удалить этот</button>':''}</div>
+  <label>Цвет полоски<input type="color" data-p="${e}color" value="${E.color}" style="height:36px;padding:2px"></label>
+  <div class="g2">${I('Автор',e+'author_name',256)}${I('Ссылка автора',e+'author_url')}</div>${I('Иконка автора (URL)',e+'author_icon')}
+  <div class="g2">${I('Заголовок',e+'title',256)}${I('Ссылка заголовка',e+'url')}</div>
+  ${T('Описание',e+'description',4096)}
+  <div class="g2">${I('Миниатюра (URL)',e+'thumbnail')}${I('Большая картинка (URL)',e+'image')}</div>
+  <div class="g2">${I('Футер',e+'footer_text',2048)}${I('Иконка футера (URL)',e+'footer_icon')}</div>
+  <label class="chk"><input type="checkbox" data-p="${e}timestamp" ${E.timestamp?'checked':''}> Показывать время отправки</label>
+  <h2 style="margin-top:6px">Поля</h2>
+  ${E.fields.map((f,i)=>`<div class="row"><label>Название<input data-p="${e}fields.${i}.name" value="${esc(f.name)}" maxlength="256"></label><label>Значение<input data-p="${e}fields.${i}.value" value="${esc(f.value)}" maxlength="1024"></label><button class="x" data-df="${i}" title="Удалить поле">✕</button></div><label class="chk"><input type="checkbox" data-p="${e}fields.${i}.inline" ${f.inline?'checked':''}> В одну строку</label>`).join('')}
+  ${E.fields.length<25?'<button id="addF">+ Поле</button>':''}</section>
+  <section><h2>Кнопки со ссылками</h2>
+  ${S.buttons.map((b,i)=>`<div class="row"><label>Текст<input data-p="buttons.${i}.label" value="${esc(b.label)}" maxlength="80"></label><label>Ссылка<input data-p="buttons.${i}.url" value="${esc(b.url)}" placeholder="https://…"></label><button class="x" data-db="${i}">✕</button></div>`).join('')}
+  ${S.buttons.length<5?'<button id="addB">+ Кнопка</button>':''}</section>`;
+  preview();
+}
+function preview(){
+  const n=S.username.trim()||'Embled',av=url(S.avatar_url);
+  const ems=S.embeds.map(e=>`<div class="em" style="border-left-color:${esc(e.color)}"><div class="eb"><div class="emm">
+  ${e.author_name?`<div class="ea">${url(e.author_icon)?`<img src="${url(e.author_icon)}" alt="">`:''}${e.author_url?`<a href="${url(e.author_url)}">${esc(e.author_name)}</a>`:esc(e.author_name)}</div>`:''}
+  ${e.title?`<div class="et">${e.url?`<a href="${url(e.url)}">${esc(e.title)}</a>`:esc(e.title)}</div>`:''}
+  ${e.description?`<div class="ed">${md(e.description)}</div>`:''}
+  ${e.fields.length?`<div class="fs">${e.fields.map(f=>`<div class="f ${f.inline?'i':''}"><div class="fn">${md(f.name)}</div>${md(f.value)}</div>`).join('')}</div>`:''}</div>
+  ${url(e.thumbnail)?`<img class="th" src="${url(e.thumbnail)}" alt="">`:''}</div>
+  ${url(e.image)?`<img class="im" src="${url(e.image)}" alt="">`:''}
+  ${e.footer_text||e.timestamp?`<div class="ef">${url(e.footer_icon)?`<img src="${url(e.footer_icon)}" alt="">`:''}<span>${esc(e.footer_text)}${e.footer_text&&e.timestamp?' • ':''}${e.timestamp?new Date().toLocaleString('ru'):''}</span></div>`:''}</div>`).join('');
+  const bts=S.buttons.filter(b=>b.label&&url(b.url));
+  $('#pv').innerHTML=`<div class="msg">${av?`<img class="av" src="${av}" alt="">`:`<div class="av">${esc(n[0].toUpperCase())}</div>`}<div class="mc"><div><span class="nm">${esc(n)}</span><span class="tag">БОТ</span></div>${S.content?`<div>${md(S.content)}</div>`:''}${ems}${bts.length?`<div class="bt">${bts.map(b=>`<a href="${url(b.url)}" target="_blank" rel="noopener">${esc(b.label)}</a>`).join('')}</div>`:''}</div></div>`;
+}
+function out(){
+  const o={version:1};
+  if(S.username.trim())o.username=S.username.trim();
+  if(S.avatar_url)o.avatar_url=S.avatar_url;
+  if(S.content)o.content=S.content;
+  o.embeds=S.embeds.map(e=>{const r={};
+    if(e.title)r.title=e.title;if(e.url)r.url=e.url;if(e.description)r.description=e.description;
+    if(e.author_name)r.author={name:e.author_name,...e.author_url&&{url:e.author_url},...e.author_icon&&{icon_url:e.author_icon}};
+    if(e.thumbnail)r.thumbnail={url:e.thumbnail};if(e.image)r.image={url:e.image};
+    if(e.footer_text)r.footer={text:e.footer_text,...e.footer_icon&&{icon_url:e.footer_icon}};
+    if(e.timestamp)r.timestamp=true;
+    const f=e.fields.filter(f=>f.name&&f.value);if(f.length)r.fields=f.map(f=>({name:f.name,value:f.value,inline:!!f.inline}));
+    if(Object.keys(r).length)r.color=parseInt(e.color.slice(1),16);return r}).filter(r=>Object.keys(r).length>1);
+  o.buttons=S.buttons.filter(b=>b.label&&b.url);
+  return JSON.stringify(o,null,2);
+}
+function load(o){
+  S={username:o.username||'',avatar_url:o.avatar_url||'',content:o.content||'',buttons:(o.buttons||[]).slice(0,5).map(b=>({label:b.label||'',url:b.url||''})),
+  embeds:(o.embeds||[]).slice(0,10).map(r=>({...newEmbed(),color:'#'+(r.color??0x5865f2).toString(16).padStart(6,'0'),title:r.title||'',url:r.url||'',description:r.description||'',
+   author_name:r.author?.name||'',author_url:r.author?.url||'',author_icon:r.author?.icon_url||'',thumbnail:r.thumbnail?.url||'',image:r.image?.url||'',
+   footer_text:r.footer?.text||'',footer_icon:r.footer?.icon_url||'',timestamp:!!r.timestamp,fields:(r.fields||[]).map(f=>({name:f.name||'',value:f.value||'',inline:!!f.inline}))}))};
+  if(!S.embeds.length)S.embeds=[newEmbed()];cur=0;form();
+}
+const toast=t=>{const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),1800)};
+document.addEventListener('input',e=>{const p=e.target.dataset?.p;if(!p)return;set(p,e.target.type=='checkbox'?e.target.checked:e.target.value);preview()});
+document.addEventListener('click',e=>{const t=e.target,d=t.dataset||{};
+  if(d.tab!==undefined){cur=+d.tab;form()}
+  else if(t.id=='addE'){S.embeds.push(newEmbed());cur=S.embeds.length-1;form()}
+  else if(t.id=='delE'){S.embeds.splice(cur,1);cur=Math.max(0,cur-1);form()}
+  else if(t.id=='addF'){S.embeds[cur].fields.push({name:'',value:'',inline:false});form()}
+  else if(d.df!==undefined){S.embeds[cur].fields.splice(+d.df,1);form()}
+  else if(t.id=='addB'){S.buttons.push({label:'',url:''});form()}
+  else if(d.db!==undefined){S.buttons.splice(+d.db,1);form()}});
+$('#dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([out()],{type:'application/json'}));a.download='embled.json';a.click();toast('Файл скачан')};
+$('#cp').onclick=()=>navigator.clipboard.writeText(out()).then(()=>toast('Скопировано'),()=>toast('Не удалось скопировать'));
+$('#rst').onclick=()=>{if(confirm('Сбросить всё?')){S=blank();cur=0;form()}};
+$('#imp').onchange=async e=>{try{load(JSON.parse(await e.target.files[0].text()));toast('Файл загружен')}catch{toast('Это не похоже на файл Embled')}e.target.value=''};
+form();
+</script></body></html>
